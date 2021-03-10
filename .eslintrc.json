@@ -34,6 +34,126 @@
     "semi": [
       "error",
       "always"
+    ],
+    "@typescript-eslint/array-type": [
+      "error",
+      {
+        "default": "array"
+      }
+    ],
+    "@typescript-eslint/no-var-requires": "error",
+    "@typescript-eslint/member-ordering": [
+      "error",
+      {
+        "default": [
+          // Index signature
+          "signature",
+          // Fields
+          "public-static-field",
+          "protected-static-field",
+          "private-static-field",
+          "public-decorated-field",
+          "protected-decorated-field",
+          "private-decorated-field",
+          // no instance field order
+          // "public-instance-field",
+          // "protected-instance-field",
+          // "private-instance-field",
+
+          "public-abstract-field",
+          "protected-abstract-field",
+          "private-abstract-field",
+          "public-field",
+          "protected-field",
+          "private-field",
+          "static-field",
+          "instance-field",
+          "abstract-field",
+          "decorated-field",
+          "field",
+          // Constructors
+          "public-constructor",
+          "protected-constructor",
+          "private-constructor",
+          "constructor",
+          // Methods
+          "public-static-method",
+          "protected-static-method",
+          "private-static-method",
+          "public-decorated-method",
+          "protected-decorated-method",
+          "private-decorated-method",
+          "public-instance-method",
+          "protected-instance-method",
+          "private-instance-method",
+          "public-abstract-method",
+          "protected-abstract-method",
+          "private-abstract-method",
+          "public-method",
+          "protected-method",
+          "private-method",
+          "static-method",
+          "instance-method",
+          "abstract-method",
+          "decorated-method",
+          "method"
+        ]
+      }
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 140,
+        "ignorePattern": "^import .*"
+      }
+    ],
+    "no-underscore-dangle": "off",
+    // enum false-positive fix
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "error",
+    // enum false-positive fix - end
+    "@typescript-eslint/naming-convention": [
+      "error",
+      // default rules
+      {
+        "selector": "default",
+        "format": [
+          "camelCase"
+        ],
+        "leadingUnderscore": "allow",
+        "trailingUnderscore": "allow"
+      },
+      {
+        "selector": "variable",
+        "format": [
+          "camelCase",
+          "UPPER_CASE"
+        ],
+        "leadingUnderscore": "allow",
+        "trailingUnderscore": "allow"
+      },
+      {
+        "selector": "typeLike",
+        "format": [
+          "PascalCase"
+        ]
+      },
+      // custom enum member name
+      {
+        "selector": "enumMember",
+        "format": [
+          "camelCase",
+          "PascalCase",
+          "snake_case",
+          "UPPER_CASE"
+        ]
+      }
+    ],
+    "@typescript-eslint/no-empty-interface": [
+      "error",
+      {
+        "allowSingleExtends": true
+      }
     ]
   }
 }
