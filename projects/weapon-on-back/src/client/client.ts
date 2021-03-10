@@ -1,4 +1,5 @@
-import * as cfx from 'fivem-js';
+import {Game, WeaponHash, enumValues, DlcWeaponData, Wait} from 'fivem-js';
+import {WeaponOnBack} from './weaponOnBack';
 
 setImmediate(() => {
     emitNet('helloserver');
@@ -8,17 +9,62 @@ onNet('helloclient', message => {
     console.log(`The server replied: ${message}`);
 });
 
+const weaponOnBack = new WeaponOnBack();
+
+setTick(async () => {
+    await Wait(0);
+
+    await weaponOnBack.detectThisPlayerWeaponChangeAsync();
+    await weaponOnBack.updateGameplayAsync();
+})
+
+on('onResourceStop', () => {
+    weaponOnBack.cleanup();
+});
+
+
+// RegisterCommand(
+//     'test1',
+//     async () => weaponOnBack.detectThisPlayerWeaponChangeAsync(),
+//     false
+// );
+//
+// RegisterCommand(
+//     'test2',
+//     async () => weaponOnBack.updateGameplayAsync(),
+//     false
+// );
+
 RegisterCommand(
-    'adder',
+    'giveWeapon',
+    async () => {
+        for (let hash of enumValues(WeaponHash)) {
+            // cfx.Game.PlayerPed.Weapons.give(hash, 9999, false, false);
+            Game.PlayerPed.giveWeapon(hash, 9999, false, false);
+        }
+
+        for (let hash of DlcWeaponData.keys()) {
+            // cfx.Game.PlayerPed.Weapons.give(hash, 9999, false, false);
+            Game.PlayerPed.giveWeapon(hash, 9999, false, false);
+        }
+    },
+    false
+);
+
+RegisterCommand(
+    'setLivery',
     async (source: number, args: string[]) => {
-        const vehicle = await cfx.World.createVehicle(
-            new cfx.Model(`adder`),
-            new cfx.Vector3(1, 2, 3),
-            4
-        );
-        cfx.Game.PlayerPed.setIntoVehicle(vehicle, cfx.VehicleSeat.Driver);
-        console.log(source);
-        console.log(args);
+        if (args.length !== 2) {
+            console.log('invalid input');
+            return;
+        }
+
+        const liveryId = parseInt(args[0]);
+        const colorId = parseInt(args[1]);
+
+        console.log(liveryId, ' ', colorId);
+
+        Game.PlayerPed.Weapons.Current.setLivery(liveryId, colorId);
     },
     false
 );
