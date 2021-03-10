@@ -14,9 +14,9 @@
   "license": "AGPL-3.0-or-later",
   "private": true,
   "dependencies": {
-    "@citizenfx/client": "^1.0.3553-1",
-    "@citizenfx/server": "^1.0.3553-1",
-    "fivem-js": "^1.5.2"
+    "@citizenfx/client": "^2.0.3619-1",
+    "@citizenfx/server": "^2.0.3619-1",
+    "fivem-js": "file:../../fivem-js"
   },
   "devDependencies": {
     "@types/node": "^14.14.31",
