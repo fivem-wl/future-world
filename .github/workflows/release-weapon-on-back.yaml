@@ -2,8 +2,6 @@ name: release-weapon-on-back
 
 on:
   push:
-    branches:
-      - master
     tags:
       - weapon-on-back-v*
 
@@ -23,9 +21,18 @@ jobs:
           npm run format
           npm run lint
           npm run buildWeaponOnBack
-      - name: release
+      - name: cache release
         uses: actions/upload-artifact@v2
         with:
           name: weapon-on-back
           path: dist/weapon-on-back
+      - name: release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dist/weapon-on-back
+          asset_name: $tag
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: ""
 
