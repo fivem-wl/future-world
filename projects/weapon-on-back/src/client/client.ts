@@ -1,6 +1,7 @@
-import { Wait } from 'fivem-js';
+import { Vector3, Wait } from 'fivem-js';
 import { WeaponOnBack } from './weaponOnBack';
 import { WeaponOnBackNetwork } from './weaponOnBackNetwork';
+import { AttachPositionOffsetCollection, AttachRotationOffsetCollection } from './attachOffsetsCollection';
 
 const globalResourceName = 'future-world';
 
@@ -24,6 +25,37 @@ setTick(async () => {
   await weaponOnBackNetwork.uploadLocalData();
   await weaponOnBackNetwork.updateAllExceptThisPlayerAsync();
 });
+
+RegisterCommand(
+  'wob',
+  (source: number, args: string) => {
+    if (args.length !== 4) {
+      console.log('Invalid input');
+      return;
+    }
+
+    const offsetName: 'pos' | 'rot' | string = args[0].toLowerCase();
+    const offsetX = parseFloat(args[1]);
+    const offsetY = parseFloat(args[2]);
+    const offsetZ = parseFloat(args[3]);
+
+    if (offsetName !== 'pos' && offsetName !== 'rot') {
+      console.log('Invalid input');
+      return;
+    }
+
+    const currWeapon = GetSelectedPedWeapon(PlayerPedId()) >>> 0;
+    const offset = new Vector3(offsetX, offsetY, offsetZ);
+
+    if (offsetName === 'pos') {
+      const offsetCollection = new AttachPositionOffsetCollection();
+      offsetCollection.set(currWeapon, offset);
+    } else {
+      const offsetCollection = new AttachRotationOffsetCollection();
+      offsetCollection.set(currWeapon, offset);
+    }
+  },
+  false);
 
 on('onClientResourceStart', (resource: string) => {
   if (resource === GetCurrentResourceName()) {

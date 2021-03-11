@@ -2,6 +2,7 @@ import { Vector3, Weapon, WeaponHash, WeaponTint } from 'fivem-js';
 import { PedHandle } from 'pedHandle';
 import { AttachDetail, AttachPoint } from './types';
 import { AttachRotationByWeapon, AttachPositionByWeapon, BoneIdByAttachPoint } from './data';
+import { AttachPositionOffsetCollection, AttachRotationOffsetCollection } from './attachOffsetsCollection';
 
 /**
  * 保存 Ped 最近的 attachDetails
@@ -14,6 +15,9 @@ export class AttachDetailsCollection {
 
   private static readonly attachPositionByWeapon = new AttachPositionByWeapon();
   private static readonly attachRotationByWeapon = new AttachRotationByWeapon();
+
+  private static readonly attachPositionOffsetCollection = new AttachPositionOffsetCollection();
+  private static readonly attachRotationOffsetCollection = new AttachRotationOffsetCollection();
 
   /**
    * create default and return
@@ -145,9 +149,21 @@ export class AttachDetailsCollection {
     const attachBone = AttachDetailsCollection.boneIdByAttachPoint.get(attachPoint);
 
     // construct offset
-    // todo: use ResourceKvp
-    const attachPosition = AttachDetailsCollection.attachPositionByWeapon.get(weapon);
-    const attachRotation = AttachDetailsCollection.attachRotationByWeapon.get(weapon);
+    const position = AttachDetailsCollection.attachPositionByWeapon.get(weapon);
+    const rotation = AttachDetailsCollection.attachRotationByWeapon.get(weapon);
+
+    const positionOffset = AttachDetailsCollection.attachPositionOffsetCollection.get(weapon);
+    const rotationOffset = AttachDetailsCollection.attachRotationOffsetCollection.get(weapon);
+
+    const attachPosition = new Vector3(
+      position.x + positionOffset.x,
+      position.y + positionOffset.y,
+      position.z + positionOffset.z);
+
+    const attachRotation = new Vector3(
+      rotation.x + rotationOffset.x,
+      rotation.y + rotationOffset.y,
+      rotation.z + rotationOffset.z);
 
     // construct
     const attachDetail: AttachDetail = {
