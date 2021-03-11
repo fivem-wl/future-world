@@ -21,7 +21,7 @@ jobs:
           npm run format
           npm run lint
           npm run buildWeaponOnBack
-          zip --junk-paths dist/weapon-on-back
+          pushd dist && zip -r weapon-on-back.zip weapon-on-back && popd
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -40,6 +40,6 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./weapon-on-back.zip
+          asset_path: ./dist/weapon-on-back.zip
           asset_name: weapon-on-back.zip
           asset_content_type: application/zip
