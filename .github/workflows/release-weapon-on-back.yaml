@@ -1,0 +1,31 @@
+name: release-weapon-on-back
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - weapon-on-back-v*
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - name: install, format, lint and then build
+        run: |
+          npm install
+          npm run format
+          npm run lint
+          npm run buildWeaponOnBack
+      - name: release
+        uses: actions/upload-artifact@v2
+        with:
+          name: weapon-on-back
+          path: dist/weapon-on-back
+
