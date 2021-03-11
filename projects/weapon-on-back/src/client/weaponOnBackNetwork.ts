@@ -27,7 +27,6 @@ export class WeaponOnBackNetwork {
     if (isAnyDifference) {
       this.networkAttachDetailsCollection.set(playerServerId, newestAttachDetails);
     }
-
   }
 
   async updateAllExceptThisPlayerAsync(): Promise<void> {

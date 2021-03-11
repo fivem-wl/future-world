@@ -64,7 +64,8 @@ RegisterCommand(
       offsetCollection.set(currWeapon, offset);
     }
   },
-  false);
+  false
+);
 
 on('onResourceStop', (resource: string) => {
   if (resource === GetCurrentResourceName()) {

@@ -158,12 +158,14 @@ export class AttachDetailsCollection {
     const attachPosition = new Vector3(
       position.x + positionOffset.x,
       position.y + positionOffset.y,
-      position.z + positionOffset.z);
+      position.z + positionOffset.z
+    );
 
     const attachRotation = new Vector3(
       rotation.x + rotationOffset.x,
       rotation.y + rotationOffset.y,
-      rotation.z + rotationOffset.z);
+      rotation.z + rotationOffset.z
+    );
 
     // construct
     const attachDetail: AttachDetail = {

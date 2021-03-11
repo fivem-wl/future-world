@@ -2,7 +2,7 @@ import { Vector3, WeaponHash } from 'fivem-js';
 
 enum VectorType {
   Pos,
-  Rot
+  Rot,
 }
 
 /**
@@ -50,7 +50,7 @@ const compress = (offset: Vector3): string =>
  * @param compressed
  */
 const decompress = (compressed: string): Vector3 => {
-  const [x, y, z] = compressed.split('|').map(n => parseFloat(n));
+  const [x, y, z] = compressed.split('|').map((n) => parseFloat(n));
   return new Vector3(x, y, z);
 };
 
