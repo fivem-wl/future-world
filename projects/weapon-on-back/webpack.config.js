@@ -46,6 +46,10 @@ const weaponOnBack = {
         {
           from: path.resolve(__dirname, 'README.md'),
           to: './'
+        },
+        {
+          from: path.resolve(__dirname, 'LICENSE'),
+          to: './'
         }
       ]
     })
