@@ -40,4 +40,18 @@ export class WeaponByAttachPointByPed {
       }
     }
   }
+
+  /**
+   * remove unused entities when corresponding eneity does not exist
+   *
+   */
+  public async removeUnusedEntitiesAsync(): Promise<void> {
+    for (const [ped, weaponByAttachPoint] of WeaponByAttachPointByPed.weaponByAttachPointByPed) {
+      if (!DoesEntityExist(ped)) {
+        for (const [, weapon] of weaponByAttachPoint) {
+          deleteEntity(weapon);
+        }
+      }
+    }
+  }
 }

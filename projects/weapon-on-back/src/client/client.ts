@@ -23,6 +23,12 @@ setTick(async () => {
 });
 
 setTick(async () => {
+  await Wait(localIntervalMs);
+
+  await weaponByAttachPointByPed.removeUnusedEntitiesAsync();
+});
+
+setTick(async () => {
   await Wait(networkIntervalMs);
 
   await weaponOnBackNetwork.uploadLocalData();
