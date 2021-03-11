@@ -38,6 +38,14 @@ const weaponOnBack = {
         {
           from: path.resolve(__dirname, 'fxmanifest.lua'),
           to: './'
+        },
+        {
+          from: path.resolve(__dirname, 'CHANGELOG.md'),
+          to: './'
+        },
+        {
+          from: path.resolve(__dirname, 'README.md'),
+          to: './'
         }
       ]
     })
