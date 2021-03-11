@@ -2,8 +2,11 @@ import { Vector3, Wait } from 'fivem-js';
 import { WeaponOnBack } from './weaponOnBack';
 import { WeaponOnBackNetwork } from './weaponOnBackNetwork';
 import { AttachPositionOffsetCollection, AttachRotationOffsetCollection } from './attachOffsetsCollection';
+import { WeaponByAttachPointByPed } from './weaponByAttachPointByPed';
 
 const globalResourceName = 'future-world';
+
+const weaponByAttachPointByPed = new WeaponByAttachPointByPed();
 
 const weaponOnBack = new WeaponOnBack();
 const weaponOnBackNetwork = new WeaponOnBackNetwork();
@@ -56,6 +59,13 @@ RegisterCommand(
     }
   },
   false);
+
+on('onResourceStop', (resource: string) => {
+  if (resource === GetCurrentResourceName()) {
+    // clean up created weapon assets
+    weaponByAttachPointByPed.cleanup();
+  }
+});
 
 on('onClientResourceStart', (resource: string) => {
   if (resource === GetCurrentResourceName()) {
