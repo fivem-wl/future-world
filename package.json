@@ -16,7 +16,7 @@
   "dependencies": {
     "@citizenfx/client": "^2.0.3619-1",
     "@citizenfx/server": "^2.0.3619-1",
-    "fivem-js": "file:../../fivem-js"
+    "fivem-js": "git+https://github.com/fivem-wl/fivem-js.git#port-weapon-related"
   },
   "devDependencies": {
     "@types/node": "^14.14.31",
