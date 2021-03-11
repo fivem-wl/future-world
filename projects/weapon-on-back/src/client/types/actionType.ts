@@ -1,6 +1,6 @@
 export enum ActionType {
-    none,
-    create,
-    update,
-    remove
+  none,
+  create,
+  update,
+  remove,
 }

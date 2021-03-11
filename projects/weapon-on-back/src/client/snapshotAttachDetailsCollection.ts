@@ -1,4 +1,4 @@
-import {AttachDetail, PedHandle} from './types';
+import { AttachDetail, PedHandle } from './types';
 
 const snapshotAttachDetailsByPed = new Map<PedHandle, AttachDetail[]>();
 
@@ -7,18 +7,18 @@ const snapshotAttachDetailsByPed = new Map<PedHandle, AttachDetail[]>();
  *
  */
 export class SnapshotAttachDetailsCollection {
-    public get(ped: PedHandle): AttachDetail[] {
-        let snapshot = snapshotAttachDetailsByPed.get(ped);
+  public get(ped: PedHandle): AttachDetail[] {
+    let snapshot = snapshotAttachDetailsByPed.get(ped);
 
-        if (!snapshot) {
-            snapshot = [];
-            snapshotAttachDetailsByPed.set(ped, snapshot);
-        }
-
-        return snapshot;
+    if (!snapshot) {
+      snapshot = [];
+      snapshotAttachDetailsByPed.set(ped, snapshot);
     }
 
-    public set(ped: PedHandle, attachDetails: AttachDetail[]): void {
-        snapshotAttachDetailsByPed.set(ped, attachDetails);
-    }
+    return snapshot;
+  }
+
+  public set(ped: PedHandle, attachDetails: AttachDetail[]): void {
+    snapshotAttachDetailsByPed.set(ped, attachDetails);
+  }
 }

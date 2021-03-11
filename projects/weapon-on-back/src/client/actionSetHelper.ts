@@ -1,93 +1,96 @@
-import {WeaponByAttachPointByPed} from './weaponByAttachPointByPed';
-import {ActionSet, ActionType, PedHandle, WeaponHandle} from './types';
-import {deleteEntity, requestWeaponAsset} from './utils';
+import { WeaponByAttachPointByPed } from './weaponByAttachPointByPed';
+import { ActionSet, ActionType, PedHandle, WeaponHandle } from './types';
+import { deleteEntity, requestWeaponAsset } from './utils';
 
 export class ActionSetHelper {
-    private readonly weaponByAttachPointByPed = new WeaponByAttachPointByPed();
+  private readonly weaponByAttachPointByPed = new WeaponByAttachPointByPed();
 
-    public cleanup(): void {
-        this.weaponByAttachPointByPed.cleanup();
+  private static async createAndAttachWeaponByActionSet(
+    ped: PedHandle,
+    actionSet: ActionSet
+  ): Promise<WeaponHandle | undefined> {
+    const {
+      // attachPoint,
+      weaponHash,
+      attachBone,
+      attachPosition,
+      attachRotation,
+      weaponComponents,
+      weaponTint,
+    } = actionSet.attachDetail;
+
+    const isWeaponAssetLoaded = await requestWeaponAsset(weaponHash, 1000, 5);
+
+    if (!isWeaponAssetLoaded) {
+      return;
     }
 
-    public async updateGameByActionSet(ped: PedHandle, actionSet: ActionSet): Promise<void> {
-        const {attachPoint} = actionSet.attachDetail;
+    const [x, y, z] = GetEntityCoords(ped, false);
 
-        const weapon = this.weaponByAttachPointByPed.get(ped, attachPoint);
+    const weaponHandle = CreateWeaponObject(weaponHash, 1, x, y, z - 10, true, 1.0, 0);
 
-        switch (actionSet.actionType) {
-            case ActionType.create:
-            case ActionType.update:
-                if (weapon) {
-                    deleteEntity(weapon);
-                    this.weaponByAttachPointByPed.delete(ped, attachPoint);
-                }
-
-                const newWeapon = await ActionSetHelper.createAndAttachWeaponByActionSet(ped, actionSet);
-
-                if (newWeapon) {
-                    this.weaponByAttachPointByPed.set(ped, attachPoint, newWeapon);
-                }
-
-                break;
-            case ActionType.remove:
-                if (weapon) {
-                    deleteEntity(weapon);
-                    this.weaponByAttachPointByPed.delete(ped, attachPoint);
-                }
-
-                break;
-            default:
-                break;
-        }
+    for (const weaponComponent of weaponComponents) {
+      GiveWeaponComponentToWeaponObject(weaponHandle, weaponComponent);
     }
 
-    private static async createAndAttachWeaponByActionSet(ped: PedHandle, actionSet: ActionSet): Promise<WeaponHandle | undefined> {
-        const {
-            // attachPoint,
-            weaponHash,
-            attachBone,
-            attachPosition,
-            attachRotation,
-            weaponComponents,
-            weaponTint
-        } = actionSet.attachDetail;
+    SetWeaponObjectTintIndex(weaponHandle, weaponTint);
 
-        const isWeaponAssetLoaded = await requestWeaponAsset(weaponHash, 1000, 5);
+    const boneIndex = GetPedBoneIndex(ped, attachBone);
 
-        if (!isWeaponAssetLoaded) {
-            return;
+    AttachEntityToEntity(
+      weaponHandle,
+      ped,
+      boneIndex,
+      attachPosition.x,
+      attachPosition.y,
+      attachPosition.z,
+      attachRotation.x,
+      attachRotation.y,
+      attachRotation.z,
+      false,
+      false,
+      false,
+      true,
+      2,
+      true
+    );
+
+    return weaponHandle;
+  }
+
+  public cleanup(): void {
+    this.weaponByAttachPointByPed.cleanup();
+  }
+
+  public async updateGameByActionSet(ped: PedHandle, actionSet: ActionSet): Promise<void> {
+    const { attachPoint } = actionSet.attachDetail;
+
+    const weapon = this.weaponByAttachPointByPed.get(ped, attachPoint);
+
+    const newWeapon = await ActionSetHelper.createAndAttachWeaponByActionSet(ped, actionSet);
+
+    switch (actionSet.actionType) {
+      case ActionType.create:
+      case ActionType.update:
+        if (weapon) {
+          deleteEntity(weapon);
+          this.weaponByAttachPointByPed.delete(ped, attachPoint);
         }
 
-        const [x, y, z] = GetEntityCoords(ped, false);
-
-        const weaponHandle = CreateWeaponObject(
-            weaponHash, 1, x, y, z - 10, true, 1.0, 0);
-
-        for (const weaponComponent of weaponComponents) {
-            GiveWeaponComponentToWeaponObject(weaponHandle, weaponComponent)
+        if (newWeapon) {
+          this.weaponByAttachPointByPed.set(ped, attachPoint, newWeapon);
         }
 
-        SetWeaponObjectTintIndex(weaponHandle, weaponTint);
+        break;
+      case ActionType.remove:
+        if (weapon) {
+          deleteEntity(weapon);
+          this.weaponByAttachPointByPed.delete(ped, attachPoint);
+        }
 
-        const boneIndex = GetPedBoneIndex(ped, attachBone);
-
-        AttachEntityToEntity(
-            weaponHandle,
-            ped,
-            boneIndex,
-            attachPosition.x,
-            attachPosition.y,
-            attachPosition.z,
-            attachRotation.x,
-            attachRotation.y,
-            attachRotation.z,
-            false,
-            false,
-            false,
-            true,
-            2,
-            true);
-
-        return weaponHandle;
+        break;
+      default:
+        break;
     }
+  }
 }

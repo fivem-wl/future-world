@@ -19,10 +19,6 @@
     "webpack.config.js"
   ],
   "rules": {
-    "indent": [
-      "error",
-      2
-    ],
     "linebreak-style": [
       "error",
       "unix"

@@ -1,13 +1,13 @@
 export enum AttachPoint {
-    // no attach
-    Invalid,
+  // no attach
+  Invalid,
 
-    // attach to left
-    Left,
+  // attach to left
+  Left,
 
-    // attach to right
-    Right,
+  // attach to right
+  Right,
 
-    // attach to spine
-    Spine
+  // attach to spine
+  Spine,
 }

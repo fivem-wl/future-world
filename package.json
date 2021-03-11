@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write \"src/**/*.ts\"",
+    "format": "prettier --write \"projects/**/*.ts\"",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "watch": "webpack --mode development --watch true",
     "buildWeaponOnBack": "webpack --mode development --config=\"projects/weapon-on-back/webpack.config.js\""
@@ -26,6 +26,7 @@
     "eslint": "^7.20.0",
     "eslint-webpack-plugin": "^2.5.2",
     "file-loader": "^6.2.0",
+    "prettier": "^2.2.1",
     "remove-files-webpack-plugin": "^1.4.4",
     "ts-loader": "^8.0.17",
     "typescript": "^4.1.5",

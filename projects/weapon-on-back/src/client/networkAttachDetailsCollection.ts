@@ -1,4 +1,4 @@
-import {AttachDetail} from './types';
+import { AttachDetail } from './types';
 
 const key = 'weaponOnBack_attachDetails';
 
@@ -7,18 +7,18 @@ const key = 'weaponOnBack_attachDetails';
  *
  */
 export class NetworkAttachDetailsCollection {
-    public get(playerServerId: number): AttachDetail[] {
-        const stateBag = Player(playerServerId);
+  public get(playerServerId: number): AttachDetail[] {
+    const stateBag = Player(playerServerId);
 
-        // noinspection UnnecessaryLocalVariableJS
-        const attachDetails: AttachDetail[] = (stateBag.state[key] ?? []);
+    // noinspection UnnecessaryLocalVariableJS
+    const attachDetails: AttachDetail[] = stateBag.state[key] ?? [];
 
-        return attachDetails;
-    }
+    return attachDetails;
+  }
 
-    public set(playerServerId: number, attachDetails: AttachDetail[]): void {
-        const stateBag = Player(playerServerId);
+  public set(playerServerId: number, attachDetails: AttachDetail[]): void {
+    const stateBag = Player(playerServerId);
 
-        stateBag.state.set(key, attachDetails, true);
-    }
+    stateBag.state.set(key, attachDetails, true);
+  }
 }
