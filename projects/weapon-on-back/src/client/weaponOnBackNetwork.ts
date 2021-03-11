@@ -16,17 +16,18 @@ export class WeaponOnBackNetwork {
 
   public uploadLocalData(): void {
     const ped: PedHandle = PlayerPedId();
+    const playerServerId = GetPlayerServerId(PlayerId());
 
-    const snapshotAttachDetails = this.snapshotAttachDetailsCollection.get(ped);
     const newestAttachDetails = this.attachDetailCollection.getAll(ped);
+    const networkAttachDetails = this.networkAttachDetailsCollection.get(playerServerId);
 
-    const actionParser = new ActionParser(snapshotAttachDetails);
+    const actionParser = new ActionParser(networkAttachDetails);
     const isAnyDifference = actionParser.isAnyDifference(newestAttachDetails);
 
     if (isAnyDifference) {
-      const playerServerId = GetPlayerServerId(PlayerId());
       this.networkAttachDetailsCollection.set(playerServerId, newestAttachDetails);
     }
+
   }
 
   async updateAllExceptThisPlayerAsync(): Promise<void> {
