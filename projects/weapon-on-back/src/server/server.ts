@@ -1,7 +1,14 @@
-onNet('helloserver', () => {
-    const _source = (global as any).source;
+const globalResourceName = 'future-world';
+const resourceName = 'weapon-on-back';
 
-    console.log(`Hello from ${_source}`);
+on('onServerResourceStart', (resource: string) => {
+    if (resource === resourceName) {
+        console.log(`[${resourceName}]Loaded, part of ${globalResourceName}`);
+    }
+});
 
-    emitNet('helloclie1nt', _source, 'i got your message!');
+on('onServerResourceStop', (resource: string) => {
+    if (resource === resourceName) {
+        console.log(`[${resourceName}]Unloaded, part of ${globalResourceName}`);
+    }
 });

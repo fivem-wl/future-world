@@ -3,7 +3,11 @@ import {PedHandle} from 'pedHandle';
 import {AttachDetail, AttachPoint} from './types';
 import {AttachRotationByWeapon, AttachPositionByWeapon, BoneIdByAttachPoint} from './data';
 
-export class AttachDetailCollection {
+/**
+ * 保存 Ped 最近的 attachDetails
+ *
+ */
+export class AttachDetailsCollection {
     private static readonly attachDetailsByPed = new Map<PedHandle, Map<AttachPoint, AttachDetail>>();
 
     private static readonly boneIdByAttachPoint = new BoneIdByAttachPoint();
@@ -18,10 +22,10 @@ export class AttachDetailCollection {
      * @param attachPoint
      */
     public get(ped: PedHandle, attachPoint: AttachPoint): AttachDetail {
-        let attachDetails = AttachDetailCollection.attachDetailsByPed.get(ped);
+        let attachDetails = AttachDetailsCollection.attachDetailsByPed.get(ped);
 
         if (!attachDetails) {
-            attachDetails = AttachDetailCollection.createDefaultAndReturn(ped);
+            attachDetails = AttachDetailsCollection.createDefaultAndReturn(ped);
         }
 
         return attachDetails.get(attachPoint);
@@ -33,10 +37,10 @@ export class AttachDetailCollection {
      * @param ped
      */
     public getAll(ped: PedHandle): AttachDetail[] {
-        let attachDetails = AttachDetailCollection.attachDetailsByPed.get(ped);
+        let attachDetails = AttachDetailsCollection.attachDetailsByPed.get(ped);
 
         if (!attachDetails) {
-            attachDetails = AttachDetailCollection.createDefaultAndReturn(ped);
+            attachDetails = AttachDetailsCollection.createDefaultAndReturn(ped);
         }
 
         return [...attachDetails.values()];
@@ -72,12 +76,12 @@ export class AttachDetailCollection {
             //     IsPedWeaponComponentActive(ped, weapon, component));
 
         // construct bone
-        const attachBone = AttachDetailCollection.boneIdByAttachPoint.get(attachPoint);
+        const attachBone = AttachDetailsCollection.boneIdByAttachPoint.get(attachPoint);
 
         // construct offset
         // todo: use ResourceKvp
-        const attachPosition = AttachDetailCollection.attachPositionByWeapon.get(weapon);
-        const attachRotation = AttachDetailCollection.attachRotationByWeapon.get(weapon);
+        const attachPosition = AttachDetailsCollection.attachPositionByWeapon.get(weapon);
+        const attachRotation = AttachDetailsCollection.attachRotationByWeapon.get(weapon);
 
         // construct
         const attachDetail: AttachDetail = {
@@ -91,10 +95,10 @@ export class AttachDetailCollection {
         };
 
         // set
-        let attachDetails = AttachDetailCollection.attachDetailsByPed.get(ped);
+        let attachDetails = AttachDetailsCollection.attachDetailsByPed.get(ped);
 
         if (!attachDetails) {
-            attachDetails = AttachDetailCollection.createDefaultAndReturn(ped);
+            attachDetails = AttachDetailsCollection.createDefaultAndReturn(ped);
         }
 
         attachDetails.set(attachPoint, attachDetail);
@@ -106,7 +110,7 @@ export class AttachDetailCollection {
      * @param ped
      */
     public static createDefaultAndReturn(ped: PedHandle): Map<AttachPoint, AttachDetail> {
-        let attachDetails = AttachDetailCollection.attachDetailsByPed.get(ped);
+        let attachDetails = AttachDetailsCollection.attachDetailsByPed.get(ped);
 
         if (!attachDetails) {
             attachDetails = new Map<AttachPoint, AttachDetail>([
@@ -117,7 +121,7 @@ export class AttachDetailCollection {
                         weaponHash: WeaponHash.Unarmed,
                         weaponTint: WeaponTint.Normal,
                         weaponComponents: [],
-                        attachBone: AttachDetailCollection.boneIdByAttachPoint.get(AttachPoint.Invalid),
+                        attachBone: AttachDetailsCollection.boneIdByAttachPoint.get(AttachPoint.Invalid),
                         attachPosition: new Vector3(0, 0, 0),
                         attachRotation: new Vector3(0, 0, 0)
                     },
@@ -129,7 +133,7 @@ export class AttachDetailCollection {
                         weaponHash: WeaponHash.Unarmed,
                         weaponTint: WeaponTint.Normal,
                         weaponComponents: [],
-                        attachBone: AttachDetailCollection.boneIdByAttachPoint.get(AttachPoint.Left),
+                        attachBone: AttachDetailsCollection.boneIdByAttachPoint.get(AttachPoint.Left),
                         attachPosition: new Vector3(0, 0, 0),
                         attachRotation: new Vector3(0, 0, 0)
                     },
@@ -141,7 +145,7 @@ export class AttachDetailCollection {
                         weaponHash: WeaponHash.Unarmed,
                         weaponTint: WeaponTint.Normal,
                         weaponComponents: [],
-                        attachBone: AttachDetailCollection.boneIdByAttachPoint.get(AttachPoint.Right),
+                        attachBone: AttachDetailsCollection.boneIdByAttachPoint.get(AttachPoint.Right),
                         attachPosition: new Vector3(0, 0, 0),
                         attachRotation: new Vector3(0, 0, 0)
                     },
@@ -153,14 +157,14 @@ export class AttachDetailCollection {
                         weaponHash: WeaponHash.Unarmed,
                         weaponTint: WeaponTint.Normal,
                         weaponComponents: [],
-                        attachBone: AttachDetailCollection.boneIdByAttachPoint.get(AttachPoint.Spine),
+                        attachBone: AttachDetailsCollection.boneIdByAttachPoint.get(AttachPoint.Spine),
                         attachPosition: new Vector3(0, 0, 0),
                         attachRotation: new Vector3(0, 0, 0)
                     },
                 ],
             ]);
 
-            AttachDetailCollection.attachDetailsByPed.set(ped, attachDetails);
+            AttachDetailsCollection.attachDetailsByPed.set(ped, attachDetails);
         }
 
         return attachDetails;

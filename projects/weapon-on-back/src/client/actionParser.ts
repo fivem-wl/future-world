@@ -9,6 +9,33 @@ export class ActionParser {
     }
 
     /**
+     * parse
+     *
+     * @param attachDetails
+     */
+    public parse(attachDetails: AttachDetail[]): ActionSet[] {
+        const actionSets: ActionSet[] = [];
+
+        for (const attachInfo of attachDetails) {
+            const actionSet = this.parseSingle(attachInfo);
+            if (actionSet.actionType !== ActionType.none) {
+                actionSets.push(actionSet);
+            }
+        }
+
+        return actionSets;
+    }
+
+    /**
+     * is any difference
+     *
+     * @param attachDetails
+     */
+    public isAnyDifference(attachDetails: AttachDetail[]): boolean {
+        return this.parse(attachDetails).length > 0;
+    }
+
+    /**
      * parse attachInfo to actionSet
      * 1. not existed + unarmed = do nothing
      * 2. only not existed = create
@@ -59,23 +86,5 @@ export class ActionParser {
 
         // otherwise, does nothing
         return {actionType: ActionType.none};
-    }
-
-    /**
-     * parse
-     *
-     * @param attachDetails
-     */
-    public parse(attachDetails: AttachDetail[]): ActionSet[] {
-        const actionSets: ActionSet[] = [];
-
-        for (const attachInfo of attachDetails) {
-            const actionSet = this.parseSingle(attachInfo);
-            if (actionSet.actionType !== ActionType.none) {
-                actionSets.push(actionSet);
-            }
-        }
-
-        return actionSets;
     }
 }
