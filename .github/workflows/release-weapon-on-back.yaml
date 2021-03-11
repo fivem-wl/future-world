@@ -15,24 +15,31 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '12'
-      - name: install, format, lint and then build
+      - name: Install, format, lint, build and then zip
         run: |
           npm install
           npm run format
           npm run lint
           npm run buildWeaponOnBack
-      - name: cache release
-        uses: actions/upload-artifact@v2
+          zip --junk-paths dist/weapon-on-back
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: weapon-on-back
-          path: dist/weapon-on-back
-      - name: release
-        uses: svenstaro/upload-release-action@v2
+          tag_name: ${{ github.ref }}
+          release_name: ${{ steps.version.outputs.version }}
+          body_path: projects/weapon-on-back/CHANGELOG.md
+          draft: false
+          prerelease: true
+      - name: Upload Release Asset
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: dist/weapon-on-back
-          asset_name: $tag
-          tag: ${{ github.ref }}
-          overwrite: true
-          body: ""
-
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./weapon-on-back.zip
+          asset_name: weapon-on-back.zip
+          asset_content_type: application/zip
