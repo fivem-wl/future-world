@@ -42,7 +42,7 @@ export class WeaponByAttachPointByPed {
   }
 
   /**
-   * remove unused entities when corresponding eneity does not exist
+   * remove unused entities when corresponding entity does not exist
    *
    */
   public async removeUnusedEntitiesAsync(): Promise<void> {
@@ -51,6 +51,9 @@ export class WeaponByAttachPointByPed {
         for (const [, weapon] of weaponByAttachPoint) {
           deleteEntity(weapon);
         }
+
+        // remove from dict
+        WeaponByAttachPointByPed.weaponByAttachPointByPed.delete(ped);
       }
     }
   }
