@@ -30,7 +30,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ steps.version.outputs.version }}
-          body_path: projects/weapon-on-back/CHANGELOG.md
+          body_path: projects/weapon-on-back/CHANGELOG_CURRENT.md
           draft: false
           prerelease: true
       - name: Upload Release Asset
