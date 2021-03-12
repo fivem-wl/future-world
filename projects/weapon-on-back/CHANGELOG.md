@@ -1,10 +1,14 @@
+### weapon-on-back-v0.3.5 (2021-03-11)
+- Optimize performance
+- Update documents
+
 ### weapon-on-back-v0.3.4 (2021-03-11)
-- custom attach position/rotation
-  - /wob pos x y z - adjust attach position
-  - /wob rot x y z - adjust attach rotation
-- remove unused entities when corresponding eneity does not exist
-- clean up create weapon assets on resource stop
-- bugfix: network status does not update
+- Custom attach position/rotation
+  - /wob pos x y z - Adjust attach position
+  - /wob rot x y z - Adjust attach rotation
+- Remove unused entities when corresponding eneity does not exist
+- Clean up create weapon assets on resource stop
+- Bugfix: network status does not update
 
 ### weapon-on-back-v0.3.3 (2021-03-11)
 - Totally rewrite, with the ease of OneSync brilliant features
