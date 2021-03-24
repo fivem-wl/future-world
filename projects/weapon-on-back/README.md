@@ -28,7 +28,7 @@
 ### Credits
 - Part of [fivem-wl](https://github.com/fivem-wl)
 - Thanks to [fivem-js](https://github.com/d0p3t/fivem-js)
-- License under [AGPL v3](https://github.com/fivem-wl/WeaponOnBack/blob/master/LICENSE)
+- License under [AGPL v3](https://github.com/fivem-wl/future-world/blob/master/projects/weapon-on-back/LICENSE)
 
 ### Donation
 - If you like this script, please consider [buy me a coffee](https://www.paypal.com/donate/?business=2HDU7MFHLCBTY&currency_code=USD), **your kindness keeps weapon on your back!**
