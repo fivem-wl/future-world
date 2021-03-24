@@ -68,14 +68,6 @@ export class WeaponOnBack {
 
     this.snapshotAttachDetailsCollection.set(ped, newestAttachDetails);
 
-    // for (const actionSet of actionSets) {
-    //     console.log(
-    //         'actionSet',
-    //         ActionType[actionSet.actionType],
-    //         AttachPoint[actionSet.attachDetail.attachPoint],
-    //         WeaponHash[actionSet.attachDetail.weaponHash]);
-    // }
-
     for (const actionSet of actionSets) {
       await this.actionSetHelper.updateGameByActionSet(ped, actionSet);
     }
