@@ -20,7 +20,7 @@ jobs:
           npm install
           npm run format
           npm run lint
-          npm run buildWeaponOnBack
+          npm run build:weapon-on-back
           pushd dist && zip -r weapon-on-back.zip weapon-on-back && popd
       - name: Create Release
         id: create_release
