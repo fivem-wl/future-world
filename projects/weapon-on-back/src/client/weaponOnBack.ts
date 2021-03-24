@@ -36,12 +36,6 @@ export class WeaponOnBack {
     const prevAttachPoint = this.attachPointByWeapon.get(prevWeapon);
     const currAttachPoint = this.attachPointByWeapon.get(currWeapon);
 
-    // Invalid attachPoint = no switch
-    if (prevAttachPoint === AttachPoint.Invalid) {
-      this.prevWeapon = currWeapon;
-      return;
-    }
-
     // 1. currentAttachPoint is Invalid -> just switch weapon
     // 2. switch weapon if same attachPoint
     // 3. otherwise, set current to unarmed, switch previous
