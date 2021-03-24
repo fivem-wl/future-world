@@ -67,9 +67,9 @@ const set = (weapon: WeaponHash, offset: Vector3, vectorType: VectorType): void 
   const maxOffset = vectorType === VectorType.Pos ? maxPositionOffset : maxRotationOffset;
 
   const trimmedOffset = new Vector3(
-    -maxOffset < offset.x && offset.x < maxOffset ? offset.x : maxOffset,
-    -maxOffset < offset.y && offset.y < maxOffset ? offset.y : maxOffset,
-    -maxOffset < offset.z && offset.z < maxOffset ? offset.z : maxOffset
+    -maxOffset < offset.x && offset.x < maxOffset ? offset.x : Math.sign(offset.x) * maxOffset,
+    -maxOffset < offset.y && offset.y < maxOffset ? offset.y : Math.sign(offset.y) * maxOffset,
+    -maxOffset < offset.z && offset.z < maxOffset ? offset.z : Math.sign(offset.z) * maxOffset
   );
 
   const compressed = compress(trimmedOffset);
